@@ -12,20 +12,20 @@ import jakarta.persistence.Table;
 public class Configuracion {
     
     @Id
-    @GeneratedValue (strategy = GenerationType.AUTO)
+    @GeneratedValue (strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(nullable = false, name = "descuento")
-    private Float descuento;
+    public Float descuento;
 
     @Column(nullable = false, name = "interes")
-    private Float interes;
+    public Float interes;
 
     @Column(nullable = false, name = "interesAfiliado")
-    private Float interesAfiliado;
+    public Float interesAfiliado;
 
     @Column(nullable = false, name = "montoAnual")
-    private Float montoAnual;
+    public Float montoAnual;
 
     public Configuracion() {}
 

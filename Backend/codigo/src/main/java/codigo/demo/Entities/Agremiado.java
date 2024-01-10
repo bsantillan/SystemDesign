@@ -18,7 +18,7 @@ import jakarta.persistence.Table;
 public class Agremiado {
 
     @Id
-    @GeneratedValue (strategy = GenerationType.AUTO)
+    @GeneratedValue (strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(nullable = false, name = "apellido")

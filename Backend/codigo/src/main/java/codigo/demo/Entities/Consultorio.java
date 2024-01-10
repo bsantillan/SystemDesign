@@ -17,7 +17,7 @@ import jakarta.persistence.Table;
 public class Consultorio {
     
     @Id
-    @GeneratedValue (strategy = GenerationType.AUTO)
+    @GeneratedValue (strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(nullable = false, name = "calle")
@@ -32,6 +32,9 @@ public class Consultorio {
     @JoinColumn(nullable = false, name = "localidadId")
     @ManyToOne
     private Localidad localidad;
+    
+    @ManyToMany(mappedBy = "consultorios")
+    private List<Agremiado> agremiados;
 
     public Consultorio() {}
 

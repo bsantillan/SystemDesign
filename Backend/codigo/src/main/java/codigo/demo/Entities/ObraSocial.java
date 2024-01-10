@@ -1,10 +1,14 @@
 package codigo.demo.Entities;
 
+
+import java.util.List;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -12,7 +16,7 @@ import jakarta.persistence.Table;
 public class ObraSocial {
     
     @Id
-    @GeneratedValue (strategy = GenerationType.AUTO)
+    @GeneratedValue (strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(nullable = false, name = "nombre")
@@ -20,6 +24,9 @@ public class ObraSocial {
 
     @Column(nullable = false, name = "registroNacional")
     private String registroNacional;
+
+    @ManyToMany(mappedBy = "obraSocials")
+    private List<Agremiado> agremiados;
 
     public ObraSocial() {}
 

@@ -20,11 +20,11 @@ import jakarta.persistence.Table;
 public class Agremiacion {
     
     @Id
-    @GeneratedValue (strategy = GenerationType.AUTO)
+    @GeneratedValue (strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(nullable = false, name = "codigo")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer codigo;
 
     @Column(nullable = false, name = "fechaDeAlta")
@@ -32,6 +32,9 @@ public class Agremiacion {
 
     @Column(nullable = true, name = "fechaDeBaja")
     private Date fechaDeBaja;
+
+    @Column(nullable = false, name = "matricula")
+    private String matricula;
 
     @JoinColumn(nullable = false, name = "agremiadoId")
     @ManyToOne
@@ -67,6 +70,14 @@ public class Agremiacion {
 
     public void setFechaDeBaja(Date fechaDeBaja) {
         this.fechaDeBaja = fechaDeBaja;
+    }
+
+    public String getMatricula(){
+        return matricula;
+    }
+
+    public void setMatricula(String matricula){
+        this.matricula=matricula;
     }
 
     public Agremiado getOdontologo() {
