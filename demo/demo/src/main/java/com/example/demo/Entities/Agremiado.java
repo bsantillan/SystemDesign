@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.example.demo.Entities.Enum.Estado;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -12,6 +13,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -25,7 +27,7 @@ public class Agremiado {
     @Column(nullable = false, name = "apellido")
     private String apellido;
 
-    @Column(nullable = false, name = "dni")
+    @Column(nullable = false, name = "dni", unique = true)
     private Integer dni;
 
     @Column(nullable = false, name = "email")
@@ -39,6 +41,9 @@ public class Agremiado {
 
     @Column(nullable = false, name = "telefono")
     private String telefono;
+    
+    @OneToMany(mappedBy = "odontologo")
+    private List<Agremiacion> agremiacion;
 
     @JoinTable(
         name = "AgremiadoObraSocial",
@@ -53,7 +58,7 @@ public class Agremiado {
         joinColumns = @JoinColumn(name = "agremiadoId", referencedColumnName = "id"),
         inverseJoinColumns = @JoinColumn(name = "consultorioId", referencedColumnName = "id")
     )
-    @ManyToMany
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Consultorio> consultorios;
 
     public Agremiado() {}

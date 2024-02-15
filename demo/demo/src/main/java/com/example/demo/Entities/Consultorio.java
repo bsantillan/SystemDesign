@@ -2,6 +2,7 @@ package com.example.demo.Entities;
 
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -30,10 +31,10 @@ public class Consultorio {
     private String numero;
 
     @JoinColumn(nullable = false, name = "localidadId")
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.PERSIST,CascadeType.MERGE})
     private Localidad localidad;
     
-    @ManyToMany(mappedBy = "consultorios")
+    @ManyToMany(mappedBy = "consultorios", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Agremiado> agremiados;
 
     public Consultorio() {}

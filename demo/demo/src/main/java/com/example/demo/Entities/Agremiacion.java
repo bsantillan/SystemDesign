@@ -1,11 +1,14 @@
 package com.example.demo.Entities;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Calendar;
 
 import com.example.demo.Entities.Conf.Configuracion;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -38,15 +41,17 @@ public class Agremiacion {
     private String matricula;
 
     @JoinColumn(nullable = false, name = "agremiadoId")
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     private Agremiado odontologo;
 
     @JoinColumn(nullable = false, name = "agremiacionId")
     @OneToMany
     private List<Cuota> cuotas;
 
-    public Agremiacion() {
-        this.fechaDeBaja=null;
+    public Agremiacion(String matricula) {
+        this.fechaDeBaja = null;
+        this.cuotas = new ArrayList<>();
+        this.matricula = matricula;
     }
 
     public Integer getCodigo() {
@@ -104,18 +109,30 @@ public class Agremiacion {
     }
 
     public List<Cuota> crearCuotas(){
-        Configuracion conf=new Configuracion();
+        Date date = new Date();
+        Calendar cal = Calendar.getInstance();
+        Calendar cal2 = Calendar.getInstance();
+        cal.setTime(date);
+        cal2.setTime(date);
+        Configuracion conf=Configuracion.getInstance();
         List<Cuota> cuotas=new ArrayList<>();
-        int cantCuotas=12-new Date().getMonth();
+        int cantCuotas=12 - cal.get(Calendar.MONTH);
+        System.out.println("cant");
+        System.out.println(cantCuotas);
         Float montoMensual=conf.getMontoAnual()/12;
 
         for(int i=0;i<cantCuotas;i++){
             Cuota cuota=new Cuota();
-            cuota.setFechaEmision(new Date(new Date().getYear(), i, new Date().getDay()));
-            cuota.setFechaVencimiento(new Date(new Date().getYear(), i, new Date().getDay()+10));
+            cal.add(Calendar.MONTH, 1);
+            cal2.add(Calendar.DATE, 10);
+            date = cal.getTime();
+            cuota.setFechaEmision(date);
+            date = cal2.getTime();
+            cuota.setFechaVencimiento(date);
             cuota.setMontoMensual(montoMensual);
             cuotas.add(cuota);
         }
+        System.out.println("final del for");
         return cuotas;
     }
 

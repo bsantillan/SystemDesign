@@ -15,7 +15,7 @@ public class Provincia {
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(nullable = false, name = "nombre")
+    @Column(nullable = false, name = "nombre", unique = true)
     private String nombre;
 
     public Provincia() {}

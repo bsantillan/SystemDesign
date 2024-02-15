@@ -1,5 +1,6 @@
 package com.example.demo.Entities;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -17,11 +18,11 @@ public class Localidad {
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(nullable = false, name = "nombre")
+    @Column(nullable = false, name = "nombre", unique = true)
     private String nombre;
 
     @JoinColumn(nullable = false, name = "provinciaId")
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Provincia provincia;
 
     public Localidad() {}

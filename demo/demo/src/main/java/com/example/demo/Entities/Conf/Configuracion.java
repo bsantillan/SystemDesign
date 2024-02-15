@@ -15,6 +15,8 @@ public class Configuracion {
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    private static Configuracion instance = null;
+
     @Column(nullable = false, name = "descuento")
     public Float descuento;
 
@@ -27,7 +29,16 @@ public class Configuracion {
     @Column(nullable = false, name = "montoAnual")
     public Float montoAnual;
 
-    public Configuracion() {}
+    private Configuracion() {
+        this.montoAnual=(float) 20;
+    }
+
+    public static Configuracion getInstance() {
+        if (instance == null) {
+            instance = new Configuracion();
+        }
+        return instance;
+    }
 
     public Float getDescuento() {
         return descuento;

@@ -24,14 +24,25 @@ public class AgremiacionBD {
         agremiacionRepository.save(agremiacion);
     }
 
-    public Integer ultimoCodigo(){
+    /*public Integer ultimoCodigo(){
         List<Agremiacion> agremiaciones =(List<Agremiacion>)agremiacionRepository.findAll();
+        System.out.println("antes de codigos");
         List<Integer> codigos=(List<Integer>) agremiaciones.stream().map(a->a.getCodigo());
+        System.out.println("despues de codigos");
         OptionalInt maximo=codigos.stream().mapToInt(c->c).max();
+        System.out.println("despues de max");
         if(maximo.isPresent()){
             return (Integer) maximo.getAsInt();
         }else{
             return 1;
         }
+    }*/
+
+    public Integer ultimoCodigo(){
+        Integer codigo=agremiacionRepository.ultimoCodigo();
+        if (codigo == null) {
+            return 1;
+        }
+        return codigo;
     }
 }
