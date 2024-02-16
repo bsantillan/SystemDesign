@@ -3,6 +3,7 @@ package com.example.demo.Resources;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,6 +15,7 @@ import com.example.demo.Entities.Agremiacion;
 import com.example.demo.Entities.Agremiado;
 import com.example.demo.Services.AgremiacionBD;
 import com.example.demo.Services.AgremiadoBD;
+
 
 
 @RestController
@@ -28,7 +30,7 @@ public class AgremiacionController {
     public AgremiacionController(){}
     
     @PostMapping("/agremiar")
-    public ResponseEntity<Agremiacion> agremiar(@RequestBody Agremiado agremiado, String matricula){
+    public ResponseEntity<Agremiacion> agremiar(@RequestBody Agremiado agremiado, @Param(value = "matricula") String matricula){
         System.out.println("entre");
         Agremiado agremiadoReal = agremiadoBD.findByDni(agremiado.getDni()).get();
         Agremiacion agremiacion=new Agremiacion(matricula);

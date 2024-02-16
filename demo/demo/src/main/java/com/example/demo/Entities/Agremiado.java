@@ -50,7 +50,7 @@ public class Agremiado {
         joinColumns = @JoinColumn(name = "agremiadoId", referencedColumnName = "id"),
         inverseJoinColumns = @JoinColumn(name = "obraSocialId", referencedColumnName = "id")
     )
-    @ManyToMany
+    @ManyToMany(cascade = {CascadeType.PERSIST,CascadeType.MERGE})
     private List<ObraSocial> obraSocials;
 
     @JoinTable(
@@ -58,7 +58,7 @@ public class Agremiado {
         joinColumns = @JoinColumn(name = "agremiadoId", referencedColumnName = "id"),
         inverseJoinColumns = @JoinColumn(name = "consultorioId", referencedColumnName = "id")
     )
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToMany
     private List<Consultorio> consultorios;
 
     public Agremiado() {}
