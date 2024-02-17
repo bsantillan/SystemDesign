@@ -1,6 +1,6 @@
 package com.example.demo.Entities;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -20,10 +20,10 @@ public class Cuota {
     private Integer id;
 
     @Column(nullable = false, name = "fechaEmision")
-    private Date fechaEmision;
+    private LocalDate fechaEmision;
 
     @Column(nullable = false, name = "fechaVencimiento")
-    private Date fechaVencimiento;
+    private LocalDate fechaVencimiento;
 
     @Column(nullable = false, name = "montoMensual")
     private Float montoMensual;
@@ -36,19 +36,19 @@ public class Cuota {
         this.pago=null;
     }
 
-    public Date getFechaEmision() {
+    public LocalDate getFechaEmision() {
         return fechaEmision;
     }
 
-    public void setFechaEmision(Date fechaEmision) {
+    public void setFechaEmision(LocalDate fechaEmision) {
         this.fechaEmision = fechaEmision;
     }
 
-    public Date getFechaVencimiento() {
+    public LocalDate getFechaVencimiento() {
         return fechaVencimiento;
     }
 
-    public void setFechaVencimiento(Date fechaVencimiento) {
+    public void setFechaVencimiento(LocalDate fechaVencimiento) {
         this.fechaVencimiento = fechaVencimiento;
     }
 

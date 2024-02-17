@@ -6,7 +6,6 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 import com.example.demo.Entities.Agremiado;
-import java.util.List;
 
 
 @Repository

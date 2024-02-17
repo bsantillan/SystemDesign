@@ -2,9 +2,7 @@ package com.example.demo.Entities;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Calendar;
 
 import com.example.demo.Entities.Conf.Configuracion;
 
@@ -32,26 +30,25 @@ public class Agremiacion {
     private Integer codigo;
 
     @Column(nullable = false, name = "fechaDeAlta")
-    private Date fechaDeAlta;
+    private LocalDate fechaDeAlta;
 
     @Column(nullable = true, name = "fechaDeBaja")
-    private Date fechaDeBaja;
+    private LocalDate fechaDeBaja;
 
     @Column(nullable = false, name = "matricula")
     private String matricula;
 
     @JoinColumn(nullable = false, name = "agremiadoId")
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne
     private Agremiado odontologo;
 
     @JoinColumn(nullable = false, name = "agremiacionId")
-    @OneToMany
+    @OneToMany(cascade = {CascadeType.MERGE ,CascadeType.PERSIST})
     private List<Cuota> cuotas;
 
-    public Agremiacion(String matricula) {
+    public Agremiacion() {
         this.fechaDeBaja = null;
         this.cuotas = new ArrayList<>();
-        this.matricula = matricula;
     }
 
     public Integer getCodigo() {
@@ -62,19 +59,19 @@ public class Agremiacion {
         this.codigo = codigo;
     }
 
-    public Date getFechaDeAlta() {
+    public LocalDate getFechaDeAlta() {
         return fechaDeAlta;
     }
 
-    public void setFechaDeAlta(Date fechaDeAlta) {
+    public void setFechaDeAlta(LocalDate fechaDeAlta) {
         this.fechaDeAlta = fechaDeAlta;
     }
 
-    public Date getFechaDeBaja() {
+    public LocalDate getFechaDeBaja() {
         return fechaDeBaja;
     }
 
-    public void setFechaDeBaja(Date fechaDeBaja) {
+    public void setFechaDeBaja(LocalDate fechaDeBaja) {
         this.fechaDeBaja = fechaDeBaja;
     }
 
@@ -109,30 +106,21 @@ public class Agremiacion {
     }
 
     public List<Cuota> crearCuotas(){
-        Date date = new Date();
-        Calendar cal = Calendar.getInstance();
-        Calendar cal2 = Calendar.getInstance();
-        cal.setTime(date);
-        cal2.setTime(date);
+        LocalDate fechaEmision=LocalDate.now();
+        LocalDate fechaVencimiento=LocalDate.now().plusDays(10);
         Configuracion conf=Configuracion.getInstance();
         List<Cuota> cuotas=new ArrayList<>();
-        int cantCuotas=12 - cal.get(Calendar.MONTH);
-        System.out.println("cant");
-        System.out.println(cantCuotas);
+        int cantCuotas=13 - LocalDate.now().getMonthValue();
         Float montoMensual=conf.getMontoAnual()/12;
+        
 
         for(int i=0;i<cantCuotas;i++){
             Cuota cuota=new Cuota();
-            cal.add(Calendar.MONTH, 1);
-            cal2.add(Calendar.DATE, 10);
-            date = cal.getTime();
-            cuota.setFechaEmision(date);
-            date = cal2.getTime();
-            cuota.setFechaVencimiento(date);
+            cuota.setFechaEmision(fechaEmision.plusMonths(i));
+            cuota.setFechaVencimiento(fechaVencimiento.plusMonths(i));
             cuota.setMontoMensual(montoMensual);
             cuotas.add(cuota);
         }
-        System.out.println("final del for");
         return cuotas;
     }
 

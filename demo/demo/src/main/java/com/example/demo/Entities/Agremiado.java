@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.example.demo.Entities.Enum.Estado;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -50,7 +49,7 @@ public class Agremiado {
         joinColumns = @JoinColumn(name = "agremiadoId", referencedColumnName = "id"),
         inverseJoinColumns = @JoinColumn(name = "obraSocialId", referencedColumnName = "id")
     )
-    @ManyToMany(cascade = {CascadeType.PERSIST,CascadeType.MERGE})
+    @ManyToMany
     private List<ObraSocial> obraSocials;
 
     @JoinTable(

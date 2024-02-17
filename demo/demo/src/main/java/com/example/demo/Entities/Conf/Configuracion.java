@@ -30,7 +30,7 @@ public class Configuracion {
     public Float montoAnual;
 
     private Configuracion() {
-        this.montoAnual=(float) 20;
+        this.montoAnual=(float) 1000000;
     }
 
     public static Configuracion getInstance() {

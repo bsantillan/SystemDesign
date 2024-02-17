@@ -11,6 +11,8 @@ import com.example.demo.Entities.Agremiado;
 import com.example.demo.Entities.DTO.AgremiadoDTO;
 import com.example.demo.Entities.Enum.Estado;
 import com.example.demo.Services.AgremiadoBD;
+import com.example.demo.Services.ConsultorioBD;
+import com.example.demo.Services.ObraSocialBD;
 
 @RestController
 @RequestMapping("/agremiado")
@@ -18,12 +20,15 @@ public class AgremiadoController {
     
     @Autowired
     AgremiadoBD agremiadoBD;
+    @Autowired
+    ConsultorioBD consultorioBD;
+    @Autowired
+    ObraSocialBD obraSocialBD;
 
     public AgremiadoController(){}
     
     @PostMapping("/alta_agremiado")
     public ResponseEntity<Agremiado> alta_agremiado(@RequestBody AgremiadoDTO agremiadoDTO){
-        System.out.println("entre");
         Agremiado agremiado=new Agremiado();
         if(this.agremiadoBD.findByDni(agremiadoDTO.getDni()).isEmpty()){
             agremiado.setDni(agremiadoDTO.getDni());
@@ -32,13 +37,9 @@ public class AgremiadoController {
             agremiado.setEstado(Estado.Deudor);
             agremiado.setNombre(agremiadoDTO.getNombre());
             agremiado.setTelefono(agremiadoDTO.getTelefono());
-            System.out.println("antes de obraSocial");
-            agremiado.setObraSocials(agremiadoDTO.getObraSocials());
-            System.out.println("antes de consultorios");
-            agremiado.setConsultorios(agremiadoBD.buscarConsultorios(agremiadoDTO.getConsultorios()));
-            System.out.println("antes de persistir");
+            agremiado.setObraSocials(obraSocialBD.buscarObrasSociales(agremiadoDTO.getObraSocials()));
+            agremiado.setConsultorios(consultorioBD.buscarConsultorios(agremiadoDTO.getConsultorios()));
             agremiadoBD.persistir(agremiado);
-            System.out.println("antes de return");
             return ResponseEntity.ok(agremiado);
         }else{
             return ResponseEntity.ok(agremiado);

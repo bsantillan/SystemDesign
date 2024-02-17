@@ -8,4 +8,5 @@ import com.example.demo.Entities.Provincia;
 @Repository
 public interface IProvinciaRepository extends CrudRepository<Provincia,Integer>{
     
+    public Provincia findByNombre(String nombre);
 }
